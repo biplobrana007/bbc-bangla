@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@100..900&display=swap"
       rel="stylesheet"
     />
-
+    
     <!-- daisyUi and tailwindcss cdn -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -25,9 +25,20 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <!-- header -->
+     <header>
+        <div class="logo bg-red-600 py-5">
+            <div class="w-11/12 mx-auto ">
+                <img src="./assets/logo.svg" alt="" class="invert">
+            </div>
+        </div>
+        <div class="main-nav pt-[6px] pb-[6px] border-b  border-gray-300">
+            <nav class="w-11/12 mx-auto ">
+                <ul id="category-container" class="flex gap-6 font-semibold text-xl">
+                </ul>
+            </nav>
+        </div>
+     </header>
     <script src="./script.js"></script>
   </body>
 </html>
-git remote add origin https://github.com/biplobrana007/bbc-bangla.git
-git branch -M main
-git push -u origin main
