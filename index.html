@@ -12,7 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    
+
     <!-- daisyUi and tailwindcss cdn -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -26,19 +26,27 @@
   </head>
   <body>
     <!-- header -->
-     <header>
-        <div class="logo bg-red-600 py-5">
-            <div class="w-11/12 mx-auto ">
-                <img src="./assets/logo.svg" alt="" class="invert">
-            </div>
+    <header>
+      <div class="logo bg-red-600 py-5">
+        <div class="w-11/12 mx-auto">
+          <img src="./assets/logo.svg" alt="" class="invert" />
         </div>
-        <div class="main-nav pt-[6px] pb-[6px] border-b  border-gray-300">
-            <nav class="w-11/12 mx-auto ">
-                <ul id="category-container" class="flex gap-6 font-semibold text-xl">
-                </ul>
-            </nav>
-        </div>
-     </header>
+      </div>
+      <div class="main-nav pt-[6px] pb-[6px] border-b border-gray-300">
+        <nav class="w-11/12 mx-auto">
+          <ul
+            id="category-container"
+            class="flex gap-6 font-semibold text-xl flex-wrap"
+          ></ul>
+        </nav>
+      </div>
+    </header>
+    <main class="w-11/12 mx-auto flex flex-col xl:flex-row gap-5 py-5 ">
+      <section id="all-news-container"  class="grid md:grid-cols-2 xl:grid-cols-3 flex-3/4 gap-5">
+       
+      </section>
+      <aside class="flex-2/9 rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">ggggg</aside>
+    </main>
     <script src="./script.js"></script>
   </body>
 </html>
