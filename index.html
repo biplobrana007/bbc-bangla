@@ -28,12 +28,12 @@
     <!-- header -->
     <header>
       <div class="logo bg-red-600 py-5">
-        <div class="w-11/12 mx-auto">
+        <div class="w-11/12 lg:w-9/12 mx-auto">
           <img src="./assets/logo.svg" alt="" class="invert" />
         </div>
       </div>
       <div class="main-nav pt-[6px] pb-[6px] border-b border-gray-300">
-        <nav class="w-11/12 mx-auto">
+        <nav class="w-11/12 lg:w-9/12 mx-auto">
           <ul
             id="category-container"
             class="flex gap-6 font-semibold text-xl flex-wrap"
@@ -41,11 +41,16 @@
         </nav>
       </div>
     </header>
-    <main class="w-11/12 mx-auto flex flex-col xl:flex-row gap-5 py-5 ">
+    <main class="w-11/12 lg:w-9/12 mx-auto flex flex-col xl:flex-row gap-5 py-5 ">
       <section id="all-news-container"  class="grid md:grid-cols-2 xl:grid-cols-3 flex-3/4 gap-5">
-       
       </section>
-      <aside class="flex-2/9 rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">ggggg</aside>
+      <aside class="flex-2/9 rounded-lg overflow-hidden min-h-80 backdrop-blur-sm bg-white/10 border border-gray-200">
+        <div class="py-5 bg-red-600 overflow-hidden ">
+          <h2 class="text-center text-white text-xl">Bookmark</h2>
+        </div>
+        <div id="bookmark-container" class="p-2 space-y-3">
+        </div>
+      </aside>
     </main>
     <script src="./script.js"></script>
   </body>

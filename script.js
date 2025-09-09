@@ -1,6 +1,7 @@
 /* all container*/
 const categoryContainer = document.getElementById("category-container");
 const allNewsContainer = document.getElementById("all-news-container");
+const bookmarkContainer = document.getElementById("bookmark-container");
 /* loading data*/
 
 const loadCategory = async () => {
@@ -50,22 +51,22 @@ const displayAllNews = (articles) => {
   allNewsContainer.innerHTML = "";
   articles.forEach((article) => {
     allNewsContainer.innerHTML += `
-        <div class="flex-1 overflow-hidden  rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">
+        <div class="flex-1 overflow-hidden flex flex-col justify-between  rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">
           <div
             class="bg-[url(${
               article.image.srcset[8].url
-            })] h-50 bg-no-repeat bg-center bg-cover"
+            })] h-40 bg-no-repeat bg-center bg-cover"
           ></div>
-          <div class=" p-3 flex gap-3 flex-col justify-between">
+          <div class=" p-3 flex gap-3 flex-col">
             <h2 class="font-semibold text-lg ellipsis">
             ${article.title}
             </h2>
             <span class="font-normal text-sm text-gray-500">${
               article.time ? article.time : "অনির্দিষ্ট সময় আগে"
             }</span>
-            <div class="flex justify-between ">
-              <button class="btn btn-soft text-black">Bookmark</button>
-              <button class="btn btn-soft text-black">View Details</button>
+            <div class="flex justify-between">
+              <button class="news-bookmark-btn btn btn-soft text-black">Bookmark</button>
+              <button class="news-details-btn btn btn-soft text-black">View Details</button>
             </div>
           </div>
         </div>
@@ -88,7 +89,29 @@ categoryContainer.addEventListener("click", (e) => {
   }
 });
 
+allNewsContainer.addEventListener("click", (e) => {
+  const btn = e.target;
 
+  if (btn.className.includes("news-bookmark-btn")) {
+    const title = btn.parentNode.parentNode.children[0].innerText;
+    bookmarkContainer.innerHTML += `
+          <div class="border border-gray-300 p-2 rounded-md space-y-2">
+            <h2 class="ellipsis">${title}</h2>
+            <div class="flex justify-end">
+              <button class="clear-btn border cursor-pointer hover:bg-gray-100 border-gray-300 px-3 py-1 rounded-sm text-sm">Clear</button>
+            </div>
+          </div>
+    `;
+  }
+});
+
+bookmarkContainer.addEventListener("click", (e) => {
+  const btn = e.target;
+  const bookmark = btn.parentNode.parentNode;
+  if (btn.className.includes("clear-btn")) {
+    bookmark.classList.add("hidden");
+  }
+});
 /* called function */
 
 loadCategory();
