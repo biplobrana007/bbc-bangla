@@ -1,7 +1,11 @@
-/* all container*/
 const categoryContainer = document.getElementById("category-container");
 const allNewsContainer = document.getElementById("all-news-container");
 const bookmarkContainer = document.getElementById("bookmark-container");
+const bookmarkAside = document.getElementById("bookmark-aside");
+const bookmarkDropdown = document.getElementById("bookmark-dropdown");
+const bookmarkCountContainer = document.getElementById("bookmark-count");
+const emptyBookmark = document.getElementById("empty-bookmark");
+
 /* loading data*/
 
 const loadCategory = async () => {
@@ -45,6 +49,20 @@ const displayCategory = (categories) => {
     <li ><a href="#" id="${category.id}"  class=" border-b-4 border-transparent hover:border-red-500 cursor-pointer">${category.title}</a></li>
     `;
   });
+
+  categoryContainer.addEventListener("click", (e) => {
+    const btn = e.target;
+    const allCategory = document.querySelectorAll("#category-container li a");
+    allCategory.forEach((categorey) => {
+      categorey.classList.add("border-transparent");
+      categorey.classList.remove("border-red-500");
+    });
+    if (btn.localName === "a") {
+      loadAllNews(btn.id);
+      btn.classList.remove("border-transparent");
+      btn.classList.add("border-red-500");
+    }
+  });
 };
 
 const displayAllNews = (articles) => {
@@ -55,7 +73,7 @@ const displayAllNews = (articles) => {
           <div
             class="bg-[url(${
               article.image.srcset[8].url
-            })] h-40 bg-no-repeat bg-center bg-cover"
+            })] max-sm:h-70 h-50 bg-no-repeat bg-center bg-cover"
           ></div>
           <div class=" p-3 flex gap-3 flex-col">
             <h2 class="font-semibold text-lg ellipsis">
@@ -75,25 +93,19 @@ const displayAllNews = (articles) => {
 };
 
 /* events */
-categoryContainer.addEventListener("click", (e) => {
-  const btn = e.target;
-  const allCategory = document.querySelectorAll("#category-container li a");
-  allCategory.forEach((categorey) => {
-    categorey.classList.add("border-transparent");
-    categorey.classList.remove("border-red-500");
-  });
-  if (btn.localName === "a") {
-    loadAllNews(btn.id);
-    btn.classList.remove("border-transparent");
-    btn.classList.add("border-red-500");
-  }
-});
 
 allNewsContainer.addEventListener("click", (e) => {
   const btn = e.target;
 
   if (btn.className.includes("news-bookmark-btn")) {
+    emptyBookmark.classList.add("hidden");
+
     const title = btn.parentNode.parentNode.children[0].innerText;
+
+    let bookmarkCount = Number(bookmarkCountContainer.innerText);
+    bookmarkCount = bookmarkCount + 1;
+    bookmarkCountContainer.innerText = bookmarkCount;
+
     bookmarkContainer.innerHTML += `
           <div class="border border-gray-300 p-2 rounded-md space-y-2">
             <h2 class="ellipsis">${title}</h2>
@@ -103,16 +115,34 @@ allNewsContainer.addEventListener("click", (e) => {
           </div>
     `;
   }
-});
 
-bookmarkContainer.addEventListener("click", (e) => {
-  const btn = e.target;
-  const bookmark = btn.parentNode.parentNode;
-  if (btn.className.includes("clear-btn")) {
-    bookmark.classList.add("hidden");
+  if (btn.className.includes("news-details-btn")) {
+    console.log(btn);
   }
 });
+const handleBookmark = () => {
+  bookmarkAside.addEventListener("click", (e) => {
+    const btn = e.target;
+    const bookmark = btn.parentNode.parentNode;
+    if (btn.className.includes("clear-btn")) {
+      bookmark.classList.add("hidden");
+
+      let bookmarkCount = Number(bookmarkCountContainer.innerText);
+      bookmarkCount = bookmarkCount - 1;
+      bookmarkCountContainer.innerText = bookmarkCount;
+    }
+
+    if (btn.className.includes("bookmark-hide-btn")) {
+      bookmarkAside.classList.add("hidden");
+    }
+  });
+  bookmarkDropdown.addEventListener("click", (e) => {
+    btn = e.target;
+    bookmarkAside.classList.remove("hidden");
+  });
+};
 /* called function */
 
 loadCategory();
 loadAllNews("main");
+handleBookmark();
