@@ -40,10 +40,18 @@
         <div class="w-11/12 lg:w-9/12 mx-auto flex justify-between">
           <img src="./assets/logo.svg" alt="" class="invert" />
           <div id="bookmark-dropdown" class="block xl:hidden">
-            <div tabindex="0" role="button" class="btn bg-black/30 backdrop-blur-sm btn-circle border-none">
+            <div
+              tabindex="0"
+              role="button"
+              class="btn bg-black/30 backdrop-blur-sm btn-circle border-none"
+            >
               <div class="indicator">
                 <i class="fa-solid fa-bookmark text-xl text-white"></i>
-                <span id="bookmark-count" class="badge badge-sm indicator-item bg-white/70 backdrop-blur-sm border-none rounded-full text-black">0</span>
+                <span
+                  id="bookmark-count"
+                  class="badge badge-sm indicator-item bg-white/70 backdrop-blur-sm border-none rounded-full text-black"
+                  >0</span
+                >
               </div>
             </div>
           </div>
@@ -65,20 +73,45 @@
         id="all-news-container"
         class="grid md:grid-cols-2 xl:grid-cols-3 flex-3/4 gap-5"
       ></section>
-      <aside id="bookmark-aside"
-        class="flex-2/9 rounded-lg  h-fit backdrop-blur-sm  bg-white hidden xl:block max-xl:absolute top-17 w-60 border border-gray-200"
+      <aside
+        id="bookmark-aside"
+        class="flex-2/9 rounded-lg h-fit backdrop-blur-sm bg-white hidden xl:block max-xl:absolute top-17 w-60 "
       >
         <div class="py-5 bg-red-600 rounded-t-lg relative">
-            <div id="" class=" absolute -right-3 -top-3 xl:hidden"><i class="bookmark-hide-btn fa-solid cursor-pointer text-white  fa-circle-xmark "></i></div>
+          <div id="" class="absolute -right-3 -top-3 xl:hidden">
+            <i
+              class="bookmark-hide-btn fa-solid cursor-pointer text-white fa-circle-xmark"
+            ></i>
+          </div>
           <h2 class="text-center text-white text-xl">Bookmark</h2>
         </div>
-        <div id="bookmark-container" class="p-2 space-y-3">
-          <div id="empty-bookmark" class="border justify-center  border-gray-300 py-10 rounded-md flex items-center">
-            <h2 class="">Empty</h2>
+        <div id="bookmark-container" class="p-2 space-y-3 border border-gray-300 rounded-b-lg border-t-0">
+          <div
+            id="empty-bookmark"
+            class="border justify-center border-gray-300 py-10 rounded-md flex items-center"
+          >
+            <h2 class="">বুকমার্ক এ কিছু যুক্ত করা হয় নি ।</h2>
           </div>
         </div>
       </aside>
     </main>
+
+    <!-- view details modal -->
+    <!-- Open the modal using ID.showModal() method -->
+    <dialog id="viewDetailModal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <div id="news-detail-container" class="">
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <div class="flex justify-end">
+              <button class="border cursor-pointer hover:bg-gray-100 border-gray-300 px-3 py-1 rounded-sm text-sm">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </dialog>
     <script src="./script.js"></script>
   </body>
 </html>

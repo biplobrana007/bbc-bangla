@@ -5,6 +5,7 @@ const bookmarkAside = document.getElementById("bookmark-aside");
 const bookmarkDropdown = document.getElementById("bookmark-dropdown");
 const bookmarkCountContainer = document.getElementById("bookmark-count");
 const emptyBookmark = document.getElementById("empty-bookmark");
+const newsDetailContainer = document.getElementById("news-detail-container");
 
 /* loading data*/
 
@@ -31,7 +32,7 @@ const loadAllNews = async (categoryId) => {
       </div>
       `;
     }
-  } catch {
+  } catch (err) {
     allNewsContainer.classList.remove("grid");
     allNewsContainer.innerHTML = `
       <div class="py-20 border border-gray-400 rounded-lg space-y-3">
@@ -39,6 +40,17 @@ const loadAllNews = async (categoryId) => {
       </div>
     `;
   }
+};
+
+const loadNewsDetails = async (newsId) => {
+  try {
+    const res = await fetch(
+      `https://news-api-fs.vercel.app/api/news/${newsId}`
+    );
+    const data = await res.json();
+    displayNewsDetails(data.article);
+    viewDetailModal.showModal();
+  } catch (err) {}
 };
 
 /* display data*/
@@ -69,7 +81,9 @@ const displayAllNews = (articles) => {
   allNewsContainer.innerHTML = "";
   articles.forEach((article) => {
     allNewsContainer.innerHTML += `
-        <div class="flex-1 overflow-hidden flex flex-col justify-between  rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">
+        <div id="${
+          article.id
+        }" class="flex-1 overflow-hidden flex flex-col justify-between  rounded-lg backdrop-blur-sm bg-white/10 border border-gray-200">
           <div
             class="bg-[url(${
               article.image.srcset[8].url
@@ -83,8 +97,8 @@ const displayAllNews = (articles) => {
               article.time ? article.time : "অনির্দিষ্ট সময় আগে"
             }</span>
             <div class="flex justify-between">
-              <button class="news-bookmark-btn btn btn-soft text-black">Bookmark</button>
-              <button class="news-details-btn btn btn-soft text-black">View Details</button>
+              <button class="news-bookmark-btn btn cursor-pointer btn-soft text-black">Bookmark</button>
+              <button class="news-details-btn btn cursor-pointer btn-soft text-black">View Details</button>
             </div>
           </div>
         </div>
@@ -92,6 +106,23 @@ const displayAllNews = (articles) => {
   });
 };
 
+const displayNewsDetails = (newsDetail) => {
+  newsDetailContainer.innerHTML = `
+    <div class="space-y-3">
+      <h2 class="text-xl font-semibold">${newsDetail.title}</h2>
+      <div class="bg-[url(${newsDetail.images[2].url})] h-60 bg-cover bg-no-repeat bg-center rounded-lg">
+      </div>
+      <div id="news-content" class="text-sm text-gray-600 font-medium"></div>
+    </div>
+  `;
+  const newsContents = newsDetail.content;
+  const newsContent = document.getElementById("news-content");
+  newsContents.forEach((content) => {
+    newsContent.innerHTML += `
+    <p>${content}</p>
+    `;
+  });
+};
 /* events */
 
 allNewsContainer.addEventListener("click", (e) => {
@@ -107,19 +138,24 @@ allNewsContainer.addEventListener("click", (e) => {
     bookmarkCountContainer.innerText = bookmarkCount;
 
     bookmarkContainer.innerHTML += `
-          <div class="border border-gray-300 p-2 rounded-md space-y-2">
-            <h2 class="ellipsis">${title}</h2>
-            <div class="flex justify-end">
-              <button class="clear-btn border cursor-pointer hover:bg-gray-100 border-gray-300 px-3 py-1 rounded-sm text-sm">Clear</button>
-            </div>
-          </div>
-    `;
+      <div class="border border-gray-300 p-2 rounded-md space-y-2">
+        <h2 class="ellipsis">${title}</h2>
+        <div class="flex justify-end">
+          <button class="clear-btn border cursor-pointer hover:bg-gray-100 border-gray-300 px-3 py-1 rounded-sm text-sm">Clear</button>
+        </div>
+      </div>
+      `;
+
+   
   }
 
   if (btn.className.includes("news-details-btn")) {
-    console.log(btn);
+    const newsDetailid = btn.parentNode.parentNode.parentNode.id;
+    loadNewsDetails(newsDetailid);
   }
 });
+
+
 const handleBookmark = () => {
   bookmarkAside.addEventListener("click", (e) => {
     const btn = e.target;
@@ -132,16 +168,31 @@ const handleBookmark = () => {
       bookmarkCountContainer.innerText = bookmarkCount;
     }
 
+    if (Number(bookmarkCountContainer.innerText) === 0) {
+      bookmarkContainer.innerHTML = `
+        <div
+          id="empty-bookmark"
+          class="border justify-center border-gray-300 py-10 rounded-md flex items-center"
+        >
+          <h2 class="">বুকমার্ক এ কিছু যুক্ত করা হয় নি ।</h2>
+        </div>
+      `;
+    }
+
     if (btn.className.includes("bookmark-hide-btn")) {
       bookmarkAside.classList.add("hidden");
     }
+
+
   });
+
   bookmarkDropdown.addEventListener("click", (e) => {
     btn = e.target;
     bookmarkAside.classList.remove("hidden");
   });
 };
 /* called function */
+
 
 loadCategory();
 loadAllNews("main");
